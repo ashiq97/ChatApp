@@ -1,6 +1,8 @@
 
 
-
+.dropdown-toggle, .dropdown-item{
+  cursor: pointer;
+}
 
 .fixed-top {
   position: fixed;
