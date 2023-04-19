@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace ChattingApp.Controllers
 {
+    [Authorize]
     public class UsersController : BaseApiController
     {
         private readonly DataContext _context;
