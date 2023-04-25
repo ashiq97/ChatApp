@@ -1,5 +1,8 @@
-﻿using ChattingApp.Data;
+﻿using AutoMapper;
+using ChattingApp.Data;
+using ChattingApp.DTOs;
 using ChattingApp.Entities;
+using ChattingApp.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,27 +16,30 @@ namespace ChattingApp.Controllers
     [Authorize]
     public class UsersController : BaseApiController
     {
-        private readonly DataContext _context;
+        private readonly IUserRepository _userrepository;
+        private readonly IMapper _mapper;
 
-        public UsersController(DataContext context)
+        public UsersController(IUserRepository userRepository,IMapper mapper)
         {
-            _context = context;
+            _userrepository = userRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsersAsync()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsersAsync()
         {
-            return await _context.Users.ToListAsync();
+            var users = await _userrepository.GetUsersAsync();
+            var userToReturn = _mapper.Map<IEnumerable<MemberDto>>(users);
+            return Ok(userToReturn);
         }
 
 
         // api/users/3
-        [Authorize]
-        [HttpGet("{id}")]
-        public async Task<ActionResult<AppUser>> GetUserByIdAsync(int id)
+        [HttpGet("{username}")]  
+        public async Task<ActionResult<MemberDto>> GetUserAsync(string username)
         {
-            return await _context.Users.FindAsync(id);
+            var user = await _userrepository.GetUserByNameAsync(username);
+            return _mapper.Map<MemberDto>(user);
         }
     }
 }
