@@ -1,4 +1,5 @@
-﻿using ChattingApp.Entities;
+﻿using ChattingApp.DTOs;
+using ChattingApp.Entities;
 using ChattingApp.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -42,5 +43,17 @@ namespace ChattingApp.Data
         {
            _context.Entry(user).State = EntityState.Modified;
         }
+
+        public Task<MemberDto> GetMemberAsync()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<IEnumerable<MemberDto>> GetMembersAsync()
+        {
+            throw new System.NotImplementedException();
+        }
+
+      
     }
 }

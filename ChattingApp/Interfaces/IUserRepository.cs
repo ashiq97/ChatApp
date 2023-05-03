@@ -1,4 +1,5 @@
-﻿using ChattingApp.Entities;
+﻿using ChattingApp.DTOs;
+using ChattingApp.Entities;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,5 +13,8 @@ namespace ChattingApp.Interfaces
         Task<IEnumerable<AppUser>> GetUsersAsync();
         Task<AppUser> GetUserByIdAsync(int id);
         Task<AppUser> GetUserByNameAsync(string name);
+
+        Task<IEnumerable<MemberDto>> GetMembersAsync();
+        Task<MemberDto> GetMemberAsync();
     }
 }
